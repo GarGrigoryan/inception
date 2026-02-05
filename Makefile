@@ -27,7 +27,7 @@ clean: down
 
 fclean: clean
 	@sudo rm -rf $(DATA_PATH)
-	@docker volume rm $$(docker volume ls -q) || true
+	@docker volume rm srcs_mariadb_data srcs_wordpress_data 2>/dev/null || true
 
 re: fclean all
 
