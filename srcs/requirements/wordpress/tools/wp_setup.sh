@@ -8,6 +8,8 @@ sleep 10
 SQL_PASSWORD=$(cat /run/secrets/db_user_password)
 WP_ADMIN_PASSWORD=$(cat /run/secrets/wp_admin_password)
 
+sed -i 's/listen = \/run\/php\/php8.2-fpm.sock/listen = 9000/g' /etc/php/8.2/fpm/pool.d/www.conf
+
 cd /var/www/html
 
 if [ ! -f "wp-config.php" ]; then
@@ -35,6 +37,7 @@ fi
 
 # Ensure PHP-FPM directory exists for the PID
 mkdir -p /run/php
+chown -R www-data:www-data /run/php
 
 # Start PHP-FPM in foreground
-exec /usr/sbin/php-fpm7.4 -F
+exec /usr/sbin/php-fpm8.2 -F

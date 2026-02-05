@@ -1,12 +1,13 @@
-FROM debian:bullseye
+FROM debian:bookworm
 
 RUN apt-get update && apt-get upgrade -y && \
     apt-get install -y \
     wget \
-    php7.4-fpm \
-    php7.4-mysql \
+    php8.2-fpm \
+    php8.2-mysql \
     mariadb-client \
-    curl
+    curl \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install WP-CLI
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
