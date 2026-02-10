@@ -88,7 +88,7 @@ Starts all containers in detached mode, creates volumes, builds images, and sets
 
 ### 5) Access
 Open your browser and type the full URL in the address bar:
-https://mmosoyan.42.fr
+https://login.42.fr
 
 ### 6) Container Management
 ```bash
@@ -102,6 +102,8 @@ make down   # Stop and remove containers
 make fclean  # Remove containers, images, and volumes
 make re      # Rebuild everything from scratch
 ```
+
+---
 
 ## Resources
 
@@ -117,8 +119,36 @@ make re      # Rebuild everything from scratch
 - Dockerfile creation tutorial - https://youtu.be/1ymi24PeF3M?si=iv1YOt-mrURoclJ-
 - Explaining Docker Compose - https://youtu.be/iOGEBj7Ozak?si=kMx-ztF1RtVdTHkl
 
+---
+
 ## AI Usage
 AI tools were used only for guidance and documentation purposes, such as:
 Understanding Docker concepts and container orchestration,
 Structuring the README and improving clarity,
 Proofreading explanations and instructions.
+
+---
+
+## Project Description
+
+### Virtual Machines vs Docker
+A **virtual machine** emulates an entire computer system. It includes its own operating system, kernel, libraries, and applications. Because each VM runs a full OS, it consumes more memory and storage and takes longer to start. The benefit is very strong isolation and the ability to run different operating systems on the same physical machine.
+
+A **Docker container** does not include a full operating system. Instead, it shares the host system’s kernel and only packages the application with its dependencies. This makes containers lightweight, fast to start, and efficient in resource usage. Containers are mainly used to package and deploy applications consistently across environments.
+
+### Secrets vs Environment Variables
+**Environment variables** are key-value pairs passed into a container to configure how an application runs. They are simple and commonly used for things like ports, environment names, or feature flags. However, they are stored in plain text and can be visible through logs, configuration files, or inspection commands, so they are not secure for sensitive information.
+
+Docker **secrets** are designed specifically to store sensitive data such as passwords, API keys, and certificates. They are managed securely by Docker, encrypted, and only exposed to containers that are explicitly allowed to access them. Secrets are not stored in plain text inside the container environment.
+
+### Docker Network vs Host Network
+By default, Docker uses a **bridge network** where each container runs in an isolated network environment. The container gets its own internal IP address, and ports must be explicitly mapped to the host to allow external access. This setup improves security and keeps containers separated from the host system.
+
+With host **networking**, the container shares the host machine’s network directly. It does not get a separate IP address and does not require port mapping. This can provide better network performance but reduces isolation and increases security risk because the container behaves like a normal process running on the host machine.
+
+### Docker Volumes vs Bind Mounts
+Both Docker volumes and bind mounts are used to persist data outside a container so it is not lost when the container is removed.
+
+A **Docker volume** is managed entirely by Docker. Docker decides When and where the data is stored on the host system. Volumes are portable, easier to back up, and generally preferred for production environments, especially for databases or long-term application data.
+
+A **bind mount** directly connects a specific folder from the host machine to a folder inside the container. This gives you full control over the files from your host system. Bind mounts are commonly used in development because you can edit files on your computer and see changes immediately inside the container. However, they are less portable because they depend on a specific host path.
