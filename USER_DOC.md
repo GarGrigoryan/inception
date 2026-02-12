@@ -1,7 +1,8 @@
-This documentation is intended for users and administrators of the Inception stack.
+*This documentation is intended for users and administrators of the Inception stack.*
 
-Inception: User & Administrator Documentation
-1. Services Provided
+# Inception: User & Administrator Documentation
+
+## Services Provided
 The Inception stack provides a secure, containerized web environment consisting of:
 
 Web Server (NGINX): Serves the website over HTTPS (TLS v1.3) and acts as the entry point for all traffic.
@@ -10,26 +11,36 @@ Content Management (WordPress): A fully functional blog/website platform powered
 
 Database (MariaDB): A relational database management system that stores all WordPress posts, users, and settings.
 
-2. Managing the Project
+## Managing the Project
 The project is managed using a Makefile to simplify Docker commands.
 
-Start the project: ```bash make
+Start the project: 
+```bash
+ make
+ ```
 
-Stop the project (keep data): ```bash make stop
+Stop the project (keep data): 
+```bash
+ make stop
+```
 
-Stop and remove containers: ```bash make down
+Stop and remove containers:
+```bash
+make down
+```
 
 
-3. Accessing the Website
-The Web Interface
+## Accessing the Website
+
+### The Web Interface
 Once the stack is running, open your web browser and navigate to: https://login.42.fr (Replace login with your specific 42 username).
 
-The Administration Panel
+### The Administration Panel
 To manage the website content, access the WordPress dashboard at: https://login.42.fr/wp-admin
 
 Note: Because the project uses a self-signed SSL certificate, your browser will show a security warning. You must click "Advanced" and "Proceed" to access the site.
 
-4. Credentials Management
+## Credentials Management
 Credentials are not hardcoded into the images for security reasons. They are managed via:
 
 Secrets: Sensitive passwords (DB Root, DB User, WP Admin) are stored in the srcs/secrets/ directory.
@@ -38,9 +49,10 @@ Environment Variables: General configuration like usernames and database names a
 
 To update a password, modify the corresponding .txt file in the secrets folder and rebuild the project.
 
-5. Health Check
+## Health Check
 To verify that all services are running correctly, use the following command:
 
-Bash
+```Bash
 docker ps
+```
 A healthy stack should show three containers (nginx, wordpress, and mariadb) with a status of "Up".
