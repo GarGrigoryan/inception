@@ -1,34 +1,27 @@
 #!/bin/bash
 set -e
 
-
 SQL_ROOT_PASSWORD=$(cat /run/secrets/db_root_password)
 SQL_PASSWORD=$(cat /run/secrets/db_user_password)
 
-if [ ! -d "/var/lib/mysql/$SQL_DATABASE" ]; then
-    # Initialize MariaDB data directory
+if [ ! -d "/var/lib/mysql/mysql" ]; then
+    echo "Initializing MariaDB data directory..."
     mysql_install_db --user=mysql --datadir=/var/lib/mysql
 
-    # Start temporary server to configure DB
-    tfile=`mktemp`
-    if [ ! -f "$tfile" ]; then
-        return 1
-    fi
+    echo "Configuring MariaDB users and database..."
 
-    cat << EOF > $tfile
-USE mysql;
+    cat <<EOF > /tmp/init.sql
+ALTER USER 'root'@'localhost' IDENTIFIED BY '${SQL_ROOT_PASSWORD}';
 FLUSH PRIVILEGES;
-ALTER USER 'root'@'localhost' IDENTIFIED BY '$SQL_ROOT_PASSWORD';
-CREATE DATABASE IF NOT EXISTS $SQL_DATABASE;
-CREATE USER IF NOT EXISTS '$SQL_USER'@'%' IDENTIFIED BY '$SQL_PASSWORD';
-GRANT ALL PRIVILEGES ON $SQL_DATABASE.* TO '$SQL_USER'@'%';
+CREATE DATABASE IF NOT EXISTS \`${SQL_DATABASE}\`;
+CREATE USER IF NOT EXISTS '${SQL_USER}'@'%' IDENTIFIED BY '${SQL_PASSWORD}';
+GRANT ALL PRIVILEGES ON \`${SQL_DATABASE}\`.* TO '${SQL_USER}'@'%';
 FLUSH PRIVILEGES;
 EOF
 
-    # Run the temp file
-    /usr/sbin/mysqld --user=mysql --bootstrap < $tfile
-    rm -f $tfile
+    /usr/sbin/mysqld --user=mysql --bootstrap < /tmp/init.sql
+    rm -f /tmp/init.sql
 fi
 
-# Execute the main daemon in the foreground (PID 1)
+echo "Starting MariaDB..."
 exec /usr/sbin/mysqld --user=mysql --console

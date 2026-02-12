@@ -1,0 +1,16 @@
+# Secrets
+../../../secrets/
+.env
+
+# Local data volumes or SQL dumps
+data/
+*.sql
+*.sql.gz
+
+# Git metadata
+.git
+.gitignore
+
+# Local tools/configs
+tools/
+conf/

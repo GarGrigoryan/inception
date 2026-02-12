@@ -62,6 +62,7 @@ Create the `secrets/` directory with files:
 db_root_password.txt
 db_user_password.txt
 wp_admin_password.txt
+wp_user_password.txt
 
 Each file should contain only the password.
 
@@ -72,11 +73,11 @@ DOMAIN_NAME=login.42.fr
 SQL_DATABASE=<database_name>
 SQL_USER=<database_user>
 
+WP_TITLE=<title>
 WP_ADMIN_USER=<admin_username>
 WP_ADMIN_EMAIL=<admin_email>
 
 WP_USER=<wordpress_user>
-WP_PASSWORD=<wordpress_user_password>
 WP_EMAIL=<wordpress_user_email>
 
 

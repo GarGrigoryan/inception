@@ -1,0 +1,18 @@
+# Secrets should never go into image
+../../../secrets/
+.env
+
+# Local logs or temp files
+*.log
+*.zip
+
+# Git metadata
+.git
+.gitignore
+
+# Local tools/configs we don't need inside image
+tools/
+conf/
+
+# Any local uploads/data that will be mounted as volumes
+wp-content/uploads/

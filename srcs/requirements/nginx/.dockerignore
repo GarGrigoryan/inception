@@ -1,0 +1,14 @@
+# Secrets
+../../../secrets/
+.env
+
+# Git metadata
+.git
+.gitignore
+
+# Local logs
+*.log
+
+# Local tools/configs not needed in image (already copied if Dockerfile needs)
+tools/
+conf/
