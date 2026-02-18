@@ -31,11 +31,12 @@ services:
       WP_ADMIN_USER: ${WP_ADMIN_USER}
       WP_ADMIN_EMAIL: ${WP_ADMIN_EMAIL}
       WP_USER: ${WP_USER}
-      WP_PASSWORD: ${WP_PASSWORD}
+      #WP_PASSWORD: ${WP_PASSWORD}
       WP_EMAIL: ${WP_EMAIL}
     secrets:
       - db_user_password
       - wp_admin_password
+      - wp_user_password
     networks:
       - inception_network
     volumes:
@@ -55,6 +56,15 @@ services:
       - inception_network
     volumes:
       - wordpress_data:/var/www/html
+
+  static_site:
+    build:
+      context: ./requirements/bonus/static_site
+      dockerfile: Dockerfile
+    container_name: static_site
+    restart: always
+    networks:
+      - inception_network
 
 networks:
   inception_network:
@@ -81,3 +91,5 @@ secrets:
     file: ../secrets/db_user_password.txt
   wp_admin_password:
     file: ../secrets/wp_admin_password.txt
+  wp_user_password:
+    file: ../secrets/wp_user_password.txt
